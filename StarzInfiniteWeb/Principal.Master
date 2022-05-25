@@ -1,0 +1,193 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.master.cs" Inherits="StarzInfiniteWeb.Principal" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>StarzInfinite</title>
+     <meta name="viewport" content="width=device-width,initial-scale=1">
+     <!-- Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Font Awesome Stylesheet -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" id="cpswitch" href="css/lightblue.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Owl Carousel Stylesheet -->
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.css">
+    <!-- Flex Slider Stylesheet -->
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css" />
+    <!--Date-Picker Stylesheet-->
+    <link rel="stylesheet" href="css/datepicker.css">
+    <!-- Magnific Gallery -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="docsupport/style.css">
+    <link rel="stylesheet" href="docsupport/prism.css">
+    <link rel="stylesheet" href="chosen.css">
+    <script src="table2excel.js"></script>
+    
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!--====== LOADER =====-->
+    <div class="loader"></div>
+    <!--======== SEARCH-OVERLAY =========-->
+    <%--<div class="overlay">
+    <a href="javascript:void(0)" id="close-button" class="closebtn">&times;</a>
+    <div class="overlay-content">
+        <div class="form-center">
+        <form>
+            <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..." required />
+                <span class="input-group-btn"><button type="submit" class="btn"><span>
+                    <i class="fa fa-search"></i></span></button></span>
+            </div><!-- end input-group -->
+            </div><!-- end form-group -->
+            </form>
+            </div><!-- end form-center -->
+        </div><!-- end overlay-content -->
+        </div><!-- end overlay -->--%>
+    <form id="form1" runat="server">
+        <div style="background-color:white">
+     <!--============= TOP-BAR ===========-->
+    <div id="top-bar" class="tb-text-white">
+    <div class="container">
+        <div class="row"><div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div id="info">
+            <ul class="list-unstyled list-inline">
+                <li>
+                    <%--<asp:Image ID="imgLogoCab" ImageUrl="~/Logos/logo_starz.png" runat="server" />--%>
+                  </li>
+            </ul>
+            </div><!-- end info -->
+             </div><!-- end columns -->
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div id="links">
+                <ul class="list-unstyled list-inline">
+                    <li><a href="ingreso.aspx"><span>
+                        <i class="fa fa-lock"></i></span>
+                        <asp:LinkButton ID="lbtnLogin" OnClick="lbtnLogin_Click" CausesValidation="false" runat="server">Ingresar</asp:LinkButton>
+                        <asp:Label ID="lblUsuario" Visible="false" runat="server" Text=""></asp:Label> </a></li>
+                    <li>
+                    </li>
+                </ul>
+                </div><!-- end links -->
+            </div><!-- end columns -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+        </div><!-- end top-bar -->
+ <nav class="navbar navbar-default main-navbar navbar-custom navbar-white" id="mynavbar-1">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" id="menu-button"><span class="icon-bar"></span>
+            <span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+        <%--<div class="header-search hidden-lg"><a href="javascript:void(0)" class="search-button"><span><i class="fa fa-search"></i></span></a>
+            </div>--%>
+            <a href="#" class="navbar-brand"><asp:Image ID="imgLogoCab" ImageUrl="~/Logos/encabezado_logo.png" Height="50" runat="server" />
+                </a></div>
+    <!-- end navbar-header -->
+        <div class="collapse navbar-collapse" id="myNavbar1">
+        <ul class="nav navbar-nav navbar-right navbar-search-link">
+            <li class="dropdown active">
+                <a href="home.aspx">Home<span></span></a>
+            </li>
+             <li class="dropdown active">
+                <a href="reserva_admin.aspx">Reservas<span></span></a>
+            </li>
+               <li class="dropdown active">
+                <a href="emision_offline.aspx">Emision Offline<span></span></a>
+            </li>
+            <li class="dropdown active">
+              <%--  <a href="productos_offline.aspx">Productos Offline<span></span></a>--%>
+            </li>
+            <li class="dropdown active">
+                <a href="ofertas.aspx">Ofertas<span></span></a>
+            </li>
+            <li class="dropdown active">
+                <a href="notificaciones.aspx">Notificaciones<span></span></a>
+            </li>
+             <li class="dropdown active">
+                <a href="soporte.aspx">Tutoriales<span></span></a>
+            </li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<span><i class="fa fa-angle-down"></i></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="reportes.aspx">Reporte ganancias</a></li>
+                    <li><a href="reporte_admin.aspx">Reporte administrativo</a></li>
+                </ul>
+            </li>
+           <li>
+               <%--<a href="javascript:void(0)" class="search-button"><span><i class="fa fa-search"></i></span></a>--%>
+
+           </li>
+
+        </ul>
+        </div>
+    <!-- end navbar collapse -->
+
+    </div><!-- end container -->
+        </nav>
+            <!-- end navbar -->
+            <div class="sidenav-content">
+                <div id="mySidenav" class="sidenav" >
+                    <h2 id="web-name"><span><i class="fa fa-plane"></i></span>StarzInfinite</h2>
+                    <div id="main-menu">
+                        <div class="closebtn"><button class="btn btn-default" id="closebtn">&times;</button></div>
+                    <!-- end close-btn -->
+                        <div class="list-group panel">
+                             <a href="home.aspx" class="list-group-item">Home<span></span></a>
+                           <a href="reserva_admin.aspx" class="list-group-item">Reservas<span></span></a>
+                            <a href="emision_offline.aspx" class="list-group-item">Emision Offline<span></span></a>
+                           <%-- <a href="productos_offline.aspx" class="list-group-item">Productos Offline<span></span></a>--%>
+                            <a href="ofertas.aspx" class="list-group-item">Ofertas<span></span></a>
+                            <a href="notificaciones.aspx" class="list-group-item">Notificaciones<span></span></a>
+                            <a href="soporte.aspx" class="list-group-item">Tutoriales<span></span></a>
+                            <a href="reportes.aspx" class="list-group-item">Reporte ganancias<span></span></a>
+                            <a href="reporte_admin.aspx" class="list-group-item">Reporte administrativo<span></span></a>
+                    <!-- end sub-menu -->
+                        </div>
+            <!-- end list-group -->
+                    </div>
+            <!-- end main-menu -->
+                 </div>
+            <!-- end mySidenav -->
+                </div>
+            <!-- end sidenav-content -->
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            
+        </div>
+    </form>
+
+        <!-- Page Scripts Starts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.flexslider.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/custom-navigation.js"></script>
+    <script src="js/custom-flex.js"></script>
+    <script src="js/custom-owl.js"></script>
+    <script src="js/custom-date-picker.js"></script>
+    <script src="js/custom-video.js"></script>
+    <!-- Page Scripts Ends -->
+    <script src="docsupport/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="chosen.jquery.js" type="text/javascript"></script>
+    <script src="docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+    <script src="docsupport/init.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="js/jspdf.debug.js"></script>
+	<script src="js/html2canvas.min.js"></script>
+	<script src="js/html2pdf.min.js"></script>
+        
+</body>
+    
+</html>
