@@ -258,78 +258,78 @@ namespace StarzInfiniteWeb
             try
             {
 
-                //string[] datos = clases.usuario.setValidaCredenciales(lblUsuario.Text, txtClave.Text).Split('|');
+                string[] datos = Usuarios.setValidaCredenciales(lblUsuario.Text, txtClave.Text).Split('|');
 
-                //if (datos[1].ToUpper() == "LOGIN CORRECTO")
-                //{
-                MetodoPago obj_mp = new MetodoPago
+                if (datos[1].ToUpper() == "LOGIN CORRECTO")
                 {
-                    mediopago = "CA",
-                    marca = "",
-                    numero = "",
-                    codigoautorizacion = "",
-                    reserva = lblPNR.Text
-                };
+                    MetodoPago obj_mp = new MetodoPago
+                    {
+                        mediopago = "CA",
+                        marca = "",
+                        numero = "",
+                        codigoautorizacion = "",
+                        reserva = lblPNR.Text
+                    };
 
-                DataTable dt_pasajeros = new DataTable();
-                if (dt_pasajeros.Rows.Count > 0)
-                {
+                    DataTable dt_pasajeros = new DataTable();
+                    if (dt_pasajeros.Rows.Count > 0)
+                    {
+                    }
+                    else
+                    {
+                        dt_pasajeros.Columns.Add("nombre", typeof(string));
+                        dt_pasajeros.Columns.Add("tipo", typeof(string));
+                        dt_pasajeros.Columns.Add("sessionId", typeof(string));
+                        dt_pasajeros.Columns.Add("token", typeof(string));
+                        dt_pasajeros.Columns.Add("ticket", typeof(string));
+                        dt_pasajeros.Columns.Add("correo", typeof(string));
+                    }
+
+
+
+                    DBApi obj = new DBApi();
+                    string json = JsonConvert.SerializeObject(obj_mp);
+                    dynamic respuesta = obj.Post("http://20.39.32.111/api/Emitir.php", json, "Basic MDQ4NjQwNjY4c3R6cmVycjg2Y2Q3MGE4OTVjZDlmYTowNHdlcndld2V3NjhzdHpyZXJyODZjZDcwYTg5NWNkOWZh");
+
+                    string respuestaJson = respuesta.ToString();
+                    //string error = respuesta.First().Error.ToString();
+                    Reservas.Application respuesta_res = new Reservas.Application();
+
+                    respuesta_res = JsonConvert.DeserializeObject<Reservas.Application>(respuestaJson);
+                    if (respuesta_res.error == "00")
+                    {
+                        string nombre, tipo, sesionId, token, ticket, correo;
+                        nombre = ""; ticket = "";
+                        sesionId = respuesta_res.datos.SessionId;
+                        token = respuesta_res.datos.SecurityToken;
+                        correo = respuesta_res.datos.correo_titular;
+                        for (int x = 0; x < respuesta_res.datos.pasajeros.Count; x++)
+                        {
+                            if (x == 0)
+                                nombre = respuesta_res.datos.pasajeros[x].nombre + " " + respuesta_res.datos.pasajeros[x].apellido;
+                            else
+                                nombre = nombre + "|" + respuesta_res.datos.pasajeros[x].nombre + " " + respuesta_res.datos.pasajeros[x].apellido;
+                            ticket = respuesta_res.datos.pasajeros[x].ticket;
+                            tipo = respuesta_res.datos.pasajeros[x].tipo;
+
+                            dt_pasajeros.Rows.Add(nombre, tipo, sesionId, token, ticket, correo);
+                        }
+                        string detalle = lblPNR.Text + "," + nombre + "," + ticket;
+                        string resultado = LocalBD.PUT_PAGO_EMISION("BI", lblUsuario.Text, lblPNR.Text, detalle);
+                        string[] mesaje = resultado.Split('|');
+                        lblAviso.Text = mesaje[1];
+                        Repeater1.DataSource = dt_pasajeros;
+                        Repeater1.DataBind();
+                        MultiView1.ActiveViewIndex = 2;
+                    }
+
                 }
                 else
-                {
-                    dt_pasajeros.Columns.Add("nombre", typeof(string));
-                    dt_pasajeros.Columns.Add("tipo", typeof(string));
-                    dt_pasajeros.Columns.Add("sessionId", typeof(string));
-                    dt_pasajeros.Columns.Add("token", typeof(string));
-                    dt_pasajeros.Columns.Add("ticket", typeof(string));
-                    dt_pasajeros.Columns.Add("correo", typeof(string));
-                }
-
-
-
-                DBApi obj = new DBApi();
-                string json = JsonConvert.SerializeObject(obj_mp);
-                dynamic respuesta = obj.Post("http://20.39.32.111/api/Emitir.php", json, "Basic MDQ4NjQwNjY4c3R6cmVycjg2Y2Q3MGE4OTVjZDlmYTowNHdlcndld2V3NjhzdHpyZXJyODZjZDcwYTg5NWNkOWZh");
-
-                string respuestaJson = respuesta.ToString();
-                //string error = respuesta.First().Error.ToString();
-                Reservas.Application respuesta_res = new Reservas.Application();
-
-                respuesta_res = JsonConvert.DeserializeObject<Reservas.Application>(respuestaJson);
-                if (respuesta_res.error == "00")
-                {
-                    string nombre, tipo, sesionId, token, ticket, correo;
-                    nombre = ""; ticket = "";
-                    sesionId = respuesta_res.datos.SessionId;
-                    token = respuesta_res.datos.SecurityToken;
-                    correo = respuesta_res.datos.correo_titular;
-                    for (int x = 0; x < respuesta_res.datos.pasajeros.Count; x++)
-                    {
-                        if (x == 0)
-                            nombre = respuesta_res.datos.pasajeros[x].nombre + " " + respuesta_res.datos.pasajeros[x].apellido;
-                        else
-                            nombre = nombre + "|" + respuesta_res.datos.pasajeros[x].nombre + " " + respuesta_res.datos.pasajeros[x].apellido;
-                        ticket = respuesta_res.datos.pasajeros[x].ticket;
-                        tipo = respuesta_res.datos.pasajeros[x].tipo;
-
-                        dt_pasajeros.Rows.Add(nombre, tipo, sesionId, token, ticket, correo);
-                    }
-                    string detalle = lblPNR.Text + "," + nombre + "," + ticket;
-                    string resultado = LocalBD.PUT_PAGO_EMISION("BI", lblUsuario.Text, lblPNR.Text, detalle);
-                    string[] mesaje = resultado.Split('|');
-                    lblAviso.Text = mesaje[1];
-                    Repeater1.DataSource = dt_pasajeros;
-                    Repeater1.DataBind();
-                    MultiView1.ActiveViewIndex = 2;
-                }
-
-                //}
-                //else
-                //{
-                //    lblAviso.Text = "Usuario o Contraseña incorrecta";
-                //}
-
+            {
+                lblAviso.Text = "Usuario o Contraseña incorrecta";
             }
+
+        }
             catch (Exception ex)
             {
                 string nombre_archivo = "error_pagar_reserva_" + DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + ".txt";

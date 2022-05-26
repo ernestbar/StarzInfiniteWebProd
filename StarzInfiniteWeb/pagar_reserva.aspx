@@ -13,10 +13,10 @@
 	<asp:Label ID="lblMoneda" runat="server" Text="" Visible="false"></asp:Label>
 	<asp:Label ID="lblEmail" runat="server" Text="" Visible="false"></asp:Label>
 	<asp:Label ID="lblDatosVueloIda" runat="server" Text="" Visible="false"></asp:Label>
-    <asp:Label ID="lblAviso" runat="server" Text=""></asp:Label>
+    
 
 
-            
+     <asp:Label ID="lblAviso" runat="server" Text=""></asp:Label>       
     <asp:MultiView ID="MultiView1" runat="server">
         <asp:View ID="View1" runat="server">
             <asp:Panel ID="Panel1" HorizontalAlign="Center" runat="server">
