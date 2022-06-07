@@ -63,7 +63,23 @@ namespace StarzInfiniteWeb
                         }
 
                         if (LocalBD.PR_GET_PREPAGO(lblUsuario.Text) == "1")
+                        {
                             Panel_billetera.Visible = true;
+                            string[] datos_billetra = LocalBD.PR_OBTIENE_HOME_VENTAS(lblUsuario.Text).Split('|');
+                            lblSaldo.Text = datos_billetra[3];
+                            if (decimal.Parse(lblSaldo.Text) < decimal.Parse(lblTotalPagar.Text))
+                            {
+                                btnPagarSaldo.Enabled = false;
+                                lblAviso.Text = "Saldo insuficiente!";
+                            }
+                            else
+                            {
+                                btnPagarSaldo.Enabled = true;
+                                lblAviso.Text = "";
+                            }
+                               
+                        }
+                           
                         else
                             Panel_billetera.Visible = false;
                         //Session["datos_reserva"] = lblAdultosResumen.Text + "|" + lblNinosResumen.Text + "|" + lblInfanteResumen.Text + "|" +//

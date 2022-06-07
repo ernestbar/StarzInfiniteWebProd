@@ -16,7 +16,7 @@
     
 
 
-     <asp:Label ID="lblAviso" runat="server" Text=""></asp:Label>       
+     <asp:Label ID="lblAviso" ForeColor="Blue" Font-Size="Large" runat="server" Text=""></asp:Label>       
     <asp:MultiView ID="MultiView1" runat="server">
         <asp:View ID="View1" runat="server">
             <asp:Panel ID="Panel1" HorizontalAlign="Center" runat="server">
